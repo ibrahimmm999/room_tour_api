@@ -20,20 +20,6 @@
       "price": 1200000,
       "description": "Kamar Apik dan Lucu",
       "url_video": "https://youtube.com/shorts/VRVrTvM6EBI?si=QnkBcKsjb-E1oCBm"
-    },
-    {
-      "id": 4,
-      "room_name": "R004",
-      "price": 1000000,
-      "description": "Kamar Indah dan Lucu",
-      "url_video": "https://youtube.com/shorts/JvU3dY4-fBQ?si=W7iwEgUBsPbTBhZy"
-    },
-    {
-      "id": 5,
-      "room_name": "R003",
-      "price": 1200000,
-      "description": "Kamar Bersih dan Apik",
-      "url_video": "https://youtube.com/shorts/vkzwmEktxVI?si=53pi80ys_0Np66lO"
     }
   ]
 }
