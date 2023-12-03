@@ -51,7 +51,6 @@ async def read_data(id: int,current_user: Annotated[dict, Depends(get_current_us
         }
 
         try:
-            # Kirim permintaan GET ke layanan teman
             response = requests.get(destination_url, headers=headers)
             response.raise_for_status()
             destination_data = response.json()

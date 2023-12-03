@@ -5,4 +5,4 @@ class User(BaseModel):
     username: str
     password: str
     role: str
-    token_monitoring_energy: str
+    token_ayokebali: str
