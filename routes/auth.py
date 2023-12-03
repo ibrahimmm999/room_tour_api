@@ -27,27 +27,27 @@ async def login_for_access_token(username: str = Form(...), password: str = Form
         access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         access_token = create_access_token(data={"sub": username}, expires_delta=access_token_expires)
 
-        friend_service_url = "https://ayokebalitst.azurewebsites.net"
-        friend_token_url = f"{friend_service_url}/signin"
+        ayokebali_url = "https://ayokebalitst.azurewebsites.net"
+        token = f"{ayokebali_url}/signin"
 
-        friend_token_data = {
+        ayokebali_data = {
             "username": username,
             "password": password
         }
 
         try:
             # Kirim permintaan POST ke layanan teman dengan format JSON
-            response = requests.post(friend_token_url, json=friend_token_data, headers={"Content-Type": "application/json"})
+            response = requests.post(token, json=ayokebali_data, headers={"Content-Type": "application/json"})
             response.raise_for_status()
-            friend_response_data = response.json()
-            friend_token = friend_response_data.get("token")
+            ayokebali_response = response.json()
+            ayokebali_token = ayokebali_response.get("token")
         except requests.RequestException as e:
             print(response.text)
-            raise HTTPException(status_code=500, detail=f"Failed to generate token in friend's service: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Failed to generate token service: {str(e)}")
 
-        # Save the friend's service token to your database
+        # Save  service token to your database
         query = "UPDATE users SET token_ayokebali = %s WHERE username = %s"
-        cursor.execute(query, (friend_token, username))
+        cursor.execute(query, (ayokebali_token, username))
         conn.commit()
 
         return {"message": "Login successfully", "access_token": access_token, "token_type": "bearer", "data": {"username": username}}
@@ -69,21 +69,21 @@ async def register(fullname: str = Form(...), username: str = Form(...), passwor
     cursor.execute(query, (fullname, username, hashed_password, role,))
     conn.commit()
 
-    friend_service_url = "https://ayokebalitst.azurewebsites.net"
-    friend_register_url = f"{friend_service_url}/register"
+    ayokebali_url = "https://ayokebalitst.azurewebsites.net"
+    ayokebali_register_url = f"{ayokebali_url}/register"
 
-    friend_register_data = {
+    register_data = {
         "username": username,
         "password": password,
     }
 
     try:
-        response = requests.post(friend_register_url, json=friend_register_data)
+        response = requests.post(ayokebali_register_url, json=register_data)
         response.raise_for_status()
     except requests.RequestException as e:
         # Print the response text for debugging purposes
         print(response.text)
-        raise HTTPException(status_code=500, detail=f"Failed to register user in friend's service: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to register user service: {str(e)}")
 
     return {
         "code": 200,

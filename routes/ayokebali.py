@@ -12,8 +12,8 @@ async def read_data(current_user: Annotated[dict, Depends(get_current_user)]):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
     token = current_user['data']['token_ayokebali']
     if token:
-        friend_service_url = "https://ayokebalitst.azurewebsites.net"
-        destination_url = f"{friend_service_url}/destination"
+        ayokebali_url = "https://ayokebalitst.azurewebsites.net"
+        destination_url = f"{ayokebali_url}/destination"
         headers = {
             'accept': 'application/json',
             "Authorization": f"Bearer {token}"
@@ -30,7 +30,7 @@ async def read_data(current_user: Annotated[dict, Depends(get_current_user)]):
                 "data" : destination_data
                 }
         except requests.RequestException as e:
-            raise HTTPException(status_code=500, detail=f"Failed to get destination data from friend's service: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Failed to get destination data service: {str(e)}")
     else:
         return {
                 "code": 404,
@@ -43,8 +43,8 @@ async def read_data(id: int,current_user: Annotated[dict, Depends(get_current_us
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
     token = current_user['data']['token_ayokebali']
     if token:
-        friend_service_url = "https://ayokebalitst.azurewebsites.net"
-        destination_url = f"{friend_service_url}/destination/{id}"
+        ayokebali_url = "https://ayokebalitst.azurewebsites.net"
+        destination_url = f"{ayokebali_url}/destination/{id}"
         headers = {
             'accept': 'application/json',
             "Authorization": f"Bearer {token}"
@@ -61,7 +61,7 @@ async def read_data(id: int,current_user: Annotated[dict, Depends(get_current_us
                 "data" : destination_data
                 }
         except requests.RequestException as e:
-            raise HTTPException(status_code=500, detail=f"Failed to get destination data from friend's service: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Failed to get destination data service: {str(e)}")
     else:
         return {
                 "code": 404,
