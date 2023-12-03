@@ -40,8 +40,8 @@ async def write_data(room: Room, check: Annotated[bool, Depends(check_is_admin)]
     if not check:
         return
     room_json = room.model_dump()
-    query = "INSERT INTO rooms(name, price, description, url_video) VALUES(%s, %s, %s, %s);"
-    cursor.execute(query, (room_json["name"], room_json["price"], room_json["description"], room_json["url_video"]))
+    query = "INSERT INTO rooms(name, price, description, url_video, user) VALUES(%s, %s, %s, %s, %s);"
+    cursor.execute(query, (room_json["name"], room_json["price"], room_json["description"], room_json["url_video"], room_json["user"]))
     conn.commit()
 
     select_query = "SELECT * FROM rooms WHERE id = LAST_INSERT_ID();"
@@ -65,8 +65,8 @@ async def update_data(room: Room, id:int, check: Annotated[bool, Depends(check_i
     if data is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Data room id {id} Not Found")
     
-    query = "UPDATE rooms SET name = %s, price = %s, description = %s, url_video = %s WHERE rooms.id = %s;"
-    cursor.execute(query, (room_json["name"],room_json["price"],room_json["description"],room_json["url_video"], id,))
+    query = "UPDATE rooms SET name = %s, price = %s, description = %s, url_video = %s, user = %s WHERE rooms.id = %s;"
+    cursor.execute(query, (room_json["name"],room_json["price"],room_json["description"],room_json["url_video"],room_json["user"], id,))
     conn.commit()
 
     select_query = "SELECT * FROM rooms WHERE rooms.id = %s;"
@@ -75,7 +75,7 @@ async def update_data(room: Room, id:int, check: Annotated[bool, Depends(check_i
     
     return {
         "code": 200,
-        "messages" : "Update Brand successfully",
+        "messages" : "Update Room successfully",
         "data" : new_room
     }
 
