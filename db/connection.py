@@ -4,8 +4,8 @@ import mysql.connector
 
 # Obtain connection string information from the portal
 config = {
-  'host': 'kostiaraamarta.mysql.database.azure.com',
-  'user': 'kostiaraamarta',
+  'host': 'dataroom.mysql.database.azure.com',
+  'user': 'dataroom',
   'password':'Mozarella1945',
   'database':'kostiaraamarta',
   'client_flags': [mysql.connector.ClientFlag.SSL],
